@@ -117,8 +117,8 @@ O frontend espera que o backend C# esteja rodando e disponível na URL configura
 - `POST /api/transacoes` - Criar transação
 
 ### Totais
-- `GET /api/totais/pessoas` - Totais por pessoa
-- `GET /api/totais/categorias` - Totais por categoria
+- `GET /api/consultas/totais-por-pessoa` - Totais por pessoa
+- `GET /api/consultas/totais-por-categoria` - Totais por categoria
 
 ## 🎨 Características de Design
 
