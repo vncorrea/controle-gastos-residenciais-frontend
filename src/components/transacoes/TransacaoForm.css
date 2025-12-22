@@ -1,0 +1,19 @@
+.form-actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+}
+
+.info-message {
+  margin-top: 8px;
+  padding: 10px 14px;
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--warning-color);
+  border-radius: 6px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-left: 3px solid var(--warning-color);
+}
+

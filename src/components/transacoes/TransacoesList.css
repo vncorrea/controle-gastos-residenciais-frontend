@@ -1,0 +1,45 @@
+.empty-message {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.error-message {
+  text-align: center;
+  padding: 20px;
+}
+
+.error-message p {
+  color: var(--danger-color);
+  margin-bottom: 16px;
+}
+
+.tipo-receita {
+  color: var(--success-color);
+  font-weight: 600;
+}
+
+.tipo-despesa {
+  color: var(--danger-color);
+  font-weight: 600;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.badge.tipo-receita {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.badge.tipo-despesa {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+}
+
