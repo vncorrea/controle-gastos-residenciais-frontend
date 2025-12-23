@@ -1,0 +1,2 @@
+export { TotaisPorPessoaPage } from './TotaisPorPessoaPage';
+

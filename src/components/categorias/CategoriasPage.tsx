@@ -1,6 +1,6 @@
 import React from 'react';
-import { CategoriaForm } from './CategoriaForm';
-import { CategoriasList } from './CategoriasList';
+import { CategoriaForm } from '@/components/categorias/CategoriaForm';
+import { CategoriasList } from '@/components/categorias/CategoriasList';
 
 export const CategoriasPage: React.FC = () => {
   const [refreshKey, setRefreshKey] = React.useState(0);

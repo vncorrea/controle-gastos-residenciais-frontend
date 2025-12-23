@@ -1,0 +1,2 @@
+export { PessoasList } from './PessoasList';
+

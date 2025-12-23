@@ -1,4 +1,4 @@
-import apiClient from './api';
+import apiClient from '@/services/api';
 import { Categoria, CreateCategoriaDTO } from '@/types';
 
 export const categoriaService = {

@@ -1,0 +1,2 @@
+export { totaisService } from './totaisService';
+

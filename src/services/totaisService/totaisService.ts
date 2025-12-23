@@ -1,4 +1,4 @@
-import apiClient from './api';
+import apiClient from '@/services/api';
 import { TotaisPorPessoaResponse, TotaisPorCategoriaResponse } from '@/types';
 
 export const totaisService = {

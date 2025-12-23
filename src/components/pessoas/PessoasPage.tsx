@@ -1,6 +1,6 @@
 import React from 'react';
-import { PessoaForm } from './PessoaForm';
-import { PessoasList } from './PessoasList';
+import { PessoaForm } from '@/components/pessoas/PessoaForm';
+import { PessoasList } from '@/components/pessoas/PessoasList';
 
 export const PessoasPage: React.FC = () => {
   const [refreshKey, setRefreshKey] = React.useState(0);

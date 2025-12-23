@@ -1,6 +1,6 @@
 import React from 'react';
-import { TransacaoForm } from './TransacaoForm';
-import { TransacoesList } from './TransacoesList';
+import { TransacaoForm } from '@/components/transacoes/TransacaoForm';
+import { TransacoesList } from '@/components/transacoes/TransacoesList';
 
 export const TransacoesPage: React.FC = () => {
   const [refreshKey, setRefreshKey] = React.useState(0);

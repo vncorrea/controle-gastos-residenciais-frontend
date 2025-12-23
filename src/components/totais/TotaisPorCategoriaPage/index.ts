@@ -1,0 +1,2 @@
+export { TotaisPorCategoriaPage } from './TotaisPorCategoriaPage';
+

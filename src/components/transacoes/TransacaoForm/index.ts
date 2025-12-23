@@ -1,0 +1,2 @@
+export { TransacaoForm } from './TransacaoForm';
+

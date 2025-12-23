@@ -1,0 +1,2 @@
+export { CategoriaForm } from './CategoriaForm';
+

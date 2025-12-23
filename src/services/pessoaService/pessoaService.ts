@@ -1,4 +1,4 @@
-import apiClient from './api';
+import apiClient from '@/services/api';
 import { Pessoa, CreatePessoaDTO } from '@/types';
 
 export const pessoaService = {
