@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaTags, FaChartLine, FaClock } from 'react-icons/fa';
+import { FaTags, FaChartLine } from 'react-icons/fa';
 import { TotaisPorCategoriaResponse } from '../../types';
 import { totaisService } from '../../services/totaisService';
 import { transacaoService } from '../../services/transacaoService';
@@ -52,29 +52,8 @@ export const TotaisPorCategoriaPage: React.FC = () => {
     }
   };
 
-  const calcularPorcentagem = (valor: number, totalGeral: number): number => {
-    if (totalGeral === 0) return 0;
-    return (Math.abs(valor) / totalGeral) * 100;
-  };
-
   const getCategoriaColor = (index: number): string => {
     return categoriaColors[index % categoriaColors.length];
-  };
-
-  const getMaiorCategoria = (): string => {
-    if (!dados || dados.categorias.length === 0) return '';
-    const maior = dados.categorias.reduce((prev, current) => 
-      (current.totalDespesas > prev.totalDespesas) ? current : prev
-    );
-    return maior.descricao;
-  };
-
-  const getMaiorCategoriaValor = (): number => {
-    if (!dados || dados.categorias.length === 0) return 0;
-    const maior = dados.categorias.reduce((prev, current) => 
-      (current.totalDespesas > prev.totalDespesas) ? current : prev
-    );
-    return maior.totalDespesas;
   };
 
   if (loading) {
@@ -97,14 +76,28 @@ export const TotaisPorCategoriaPage: React.FC = () => {
   }
 
   const totalGeralDespesas = dados.totalDespesasGeral;
+  const totalGeralReceitas = dados.totalReceitasGeral;
+  const saldoLiquidoGeral = dados.saldoLiquidoGeral;
 
   return (
     <>
       <div className="dashboard-cards">
         <DashboardCard
+          title="Total em Receitas"
+          value={formatCurrency(totalGeralReceitas)}
+          subtitle="Todas as categorias"
+          icon={<FaChartLine />}
+        />
+        <DashboardCard
           title="Total em Despesas"
           value={formatCurrency(totalGeralDespesas)}
           subtitle="Todas as categorias"
+          icon={<FaChartLine />}
+        />
+        <DashboardCard
+          title="Saldo Líquido"
+          value={formatCurrency(saldoLiquidoGeral)}
+          subtitle="Receitas - Despesas"
           icon={<FaChartLine />}
         />
         <DashboardCard
@@ -113,38 +106,80 @@ export const TotaisPorCategoriaPage: React.FC = () => {
           subtitle="Categorias ativas"
           icon={<FaTags />}
         />
-        <DashboardCard
-          title="Maior Categoria"
-          value={getMaiorCategoria()}
-          subtitle={formatCurrency(getMaiorCategoriaValor())}
-          icon={<FaClock />}
-        />
       </div>
 
       <Card 
-        title="Gastos por Categoria" 
-        subtitle="Resumo dos gastos organizados por categoria"
+        title="Totais por Categoria" 
+        subtitle="Resumo de receitas e despesas organizados por categoria"
         icon={<FaTags />}
       >
         {dados.categorias.length === 0 ? (
           <p className="empty-message">Nenhum dado disponível.</p>
         ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>CATEGORIA</th>
-                <th>TRANSAÇÕES</th>
-                <th>TOTAL</th>
-                <th>% DO TOTAL</th>
-              </tr>
-            </thead>
-            <tbody>
+          <>
+            <div className="table-container">
+              <table className="totais-table">
+                <thead>
+                  <tr>
+                    <th>CATEGORIA</th>
+                    <th>TRANSAÇÕES</th>
+                    <th>RECEITAS</th>
+                    <th>DESPESAS</th>
+                    <th>SALDO</th>
+                    <th>% DO TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dados.categorias.map((total, index) => {
+                    const totalGeral = totalGeralDespesas + totalGeralReceitas;
+                    const porcentagem = totalGeral > 0 
+                      ? (Math.abs(total.totalDespesas + total.totalReceitas) / totalGeral) * 100 
+                      : 0;
+                    const categoriaColor = getCategoriaColor(index);
+                    return (
+                      <tr key={total.categoriaId}>
+                        <td>
+                          <div className="categoria-item">
+                            <span 
+                              className="categoria-dot" 
+                              style={{ backgroundColor: categoriaColor }}
+                            />
+                            <strong>{total.descricao}</strong>
+                          </div>
+                        </td>
+                        <td>{numTransacoes[total.categoriaId] || 0} transações</td>
+                        <td className="tipo-receita">
+                          <strong>{formatCurrency(total.totalReceitas)}</strong>
+                        </td>
+                        <td className="tipo-despesa">
+                          <strong>{formatCurrency(total.totalDespesas)}</strong>
+                        </td>
+                        <td>
+                          <strong style={{ 
+                            color: total.saldo >= 0 ? 'var(--success-color)' : 'var(--danger-color)' 
+                          }}>
+                            {formatCurrency(total.saldo)}
+                          </strong>
+                        </td>
+                        <td>
+                          <ProgressBar percentage={porcentagem} color={categoriaColor} />
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <div className="mobile-cards">
               {dados.categorias.map((total, index) => {
-                const porcentagem = calcularPorcentagem(total.totalDespesas, totalGeralDespesas);
+                const totalGeral = totalGeralDespesas + totalGeralReceitas;
+                const porcentagem = totalGeral > 0 
+                  ? (Math.abs(total.totalDespesas + total.totalReceitas) / totalGeral) * 100 
+                  : 0;
                 const categoriaColor = getCategoriaColor(index);
                 return (
-                  <tr key={total.categoriaId}>
-                    <td>
+                  <div key={total.categoriaId} className="categoria-card">
+                    <div className="categoria-card-header">
                       <div className="categoria-item">
                         <span 
                           className="categoria-dot" 
@@ -152,19 +187,48 @@ export const TotaisPorCategoriaPage: React.FC = () => {
                         />
                         <strong>{total.descricao}</strong>
                       </div>
-                    </td>
-                    <td>{numTransacoes[total.categoriaId] || 0} transações</td>
-                    <td className="tipo-despesa">
-                      <strong>{formatCurrency(total.totalDespesas)}</strong>
-                    </td>
-                    <td>
-                      <ProgressBar percentage={porcentagem} color={categoriaColor} />
-                    </td>
-                  </tr>
+                      <span className="categoria-transacoes">
+                        {numTransacoes[total.categoriaId] || 0} transações
+                      </span>
+                    </div>
+                    <div className="categoria-card-body">
+                      <div className="categoria-value-row">
+                        <div className="categoria-value">
+                          <span className="categoria-label">Receitas</span>
+                          <span className="tipo-receita">
+                            {formatCurrency(total.totalReceitas)}
+                          </span>
+                        </div>
+                        <div className="categoria-value">
+                          <span className="categoria-label">Despesas</span>
+                          <span className="tipo-despesa">
+                            {formatCurrency(total.totalDespesas)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="categoria-value-row">
+                        <div className="categoria-value">
+                          <span className="categoria-label">Saldo</span>
+                          <strong style={{ 
+                            color: total.saldo >= 0 ? 'var(--success-color)' : 'var(--danger-color)' 
+                          }}>
+                            {formatCurrency(total.saldo)}
+                          </strong>
+                        </div>
+                        <div className="categoria-value">
+                          <span className="categoria-label">% do Total</span>
+                          <span>{porcentagem.toFixed(1)}%</span>
+                        </div>
+                      </div>
+                      <div className="categoria-progress">
+                        <ProgressBar percentage={porcentagem} color={categoriaColor} />
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
-            </tbody>
-          </table>
+            </div>
+          </>
         )}
       </Card>
     </>

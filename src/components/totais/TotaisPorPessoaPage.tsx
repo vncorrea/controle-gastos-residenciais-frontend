@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaUsers, FaChartLine, FaUser } from 'react-icons/fa';
+import { FaUsers, FaChartLine } from 'react-icons/fa';
 import { TotaisPorPessoaResponse } from '../../types';
 import { totaisService } from '../../services/totaisService';
 import { transacaoService } from '../../services/transacaoService';
@@ -43,10 +43,6 @@ export const TotaisPorPessoaPage: React.FC = () => {
     }
   };
 
-  const calcularPorcentagem = (valor: number, totalGeral: number): number => {
-    if (totalGeral === 0) return 0;
-    return (Math.abs(valor) / totalGeral) * 100;
-  };
 
   if (loading) {
     return <LoadingSpinner />;
@@ -67,18 +63,29 @@ export const TotaisPorPessoaPage: React.FC = () => {
     return null;
   }
 
-  const totalGeral = dados.totalDespesasGeral;
-  const mediaPorPessoa = dados.pessoas.length > 0 
-    ? totalGeral / dados.pessoas.length 
-    : 0;
+  const totalGeralDespesas = dados.totalDespesasGeral;
+  const totalGeralReceitas = dados.totalReceitasGeral;
+  const saldoLiquidoGeral = dados.saldoLiquidoGeral;
 
   return (
     <>
       <div className="dashboard-cards">
         <DashboardCard
-          title="Total Geral"
-          value={formatCurrency(totalGeral)}
-          subtitle="Soma de todas as pessoas"
+          title="Total em Receitas"
+          value={formatCurrency(totalGeralReceitas)}
+          subtitle="Todas as pessoas"
+          icon={<FaChartLine />}
+        />
+        <DashboardCard
+          title="Total em Despesas"
+          value={formatCurrency(totalGeralDespesas)}
+          subtitle="Todas as pessoas"
+          icon={<FaChartLine />}
+        />
+        <DashboardCard
+          title="Saldo Líquido"
+          value={formatCurrency(saldoLiquidoGeral)}
+          subtitle="Receitas - Despesas"
           icon={<FaChartLine />}
         />
         <DashboardCard
@@ -87,50 +94,113 @@ export const TotaisPorPessoaPage: React.FC = () => {
           subtitle="Total de pessoas ativas"
           icon={<FaUsers />}
         />
-        <DashboardCard
-          title="Média por Pessoa"
-          value={formatCurrency(mediaPorPessoa)}
-          subtitle="Gasto médio individual"
-          icon={<FaUser />}
-        />
       </div>
 
       <Card 
-        title="Gastos por Pessoa" 
-        subtitle="Resumo dos gastos organizados por pessoa"
+        title="Totais por Pessoa" 
+        subtitle="Resumo de receitas e despesas organizados por pessoa"
         icon={<FaUsers />}
       >
         {dados.pessoas.length === 0 ? (
           <p className="empty-message">Nenhum dado disponível.</p>
         ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>PESSOA</th>
-                <th>TRANSAÇÕES</th>
-                <th>TOTAL</th>
-                <th>% DO TOTAL</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dados.pessoas.map((total) => {
-                const valorTotal = total.totalDespesas;
-                const porcentagem = calcularPorcentagem(valorTotal, totalGeral);
-                return (
-                  <tr key={total.pessoaId}>
-                    <td><strong>{total.nome}</strong></td>
-                    <td>{numTransacoes[total.pessoaId] || 0} transações</td>
-                    <td className="tipo-despesa">
-                      <strong>{formatCurrency(valorTotal)}</strong>
-                    </td>
-                    <td>
-                      <ProgressBar percentage={porcentagem} />
-                    </td>
+          <>
+            <div className="table-container">
+              <table className="pessoas-table">
+                <thead>
+                  <tr>
+                    <th>PESSOA</th>
+                    <th>TRANSAÇÕES</th>
+                    <th>RECEITAS</th>
+                    <th>DESPESAS</th>
+                    <th>SALDO</th>
+                    <th>% DO TOTAL</th>
                   </tr>
+                </thead>
+                <tbody>
+                  {dados.pessoas.map((total) => {
+                    const totalGeral = totalGeralDespesas + totalGeralReceitas;
+                    const porcentagem = totalGeral > 0 
+                      ? (Math.abs(total.totalDespesas + total.totalReceitas) / totalGeral) * 100 
+                      : 0;
+                    return (
+                      <tr key={total.pessoaId}>
+                        <td><strong>{total.nome}</strong></td>
+                        <td>{numTransacoes[total.pessoaId] || 0} transações</td>
+                        <td className="tipo-receita">
+                          <strong>{formatCurrency(total.totalReceitas)}</strong>
+                        </td>
+                        <td className="tipo-despesa">
+                          <strong>{formatCurrency(total.totalDespesas)}</strong>
+                        </td>
+                        <td>
+                          <strong style={{ 
+                            color: total.saldo >= 0 ? 'var(--success-color)' : 'var(--danger-color)' 
+                          }}>
+                            {formatCurrency(total.saldo)}
+                          </strong>
+                        </td>
+                        <td>
+                          <ProgressBar percentage={porcentagem} />
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <div className="mobile-cards">
+              {dados.pessoas.map((total) => {
+                const totalGeral = totalGeralDespesas + totalGeralReceitas;
+                const porcentagem = totalGeral > 0 
+                  ? (Math.abs(total.totalDespesas + total.totalReceitas) / totalGeral) * 100 
+                  : 0;
+                return (
+                  <div key={total.pessoaId} className="pessoa-card">
+                    <div className="pessoa-card-header">
+                      <strong>{total.nome}</strong>
+                      <span className="pessoa-transacoes">
+                        {numTransacoes[total.pessoaId] || 0} transações
+                      </span>
+                    </div>
+                    <div className="pessoa-card-body">
+                      <div className="pessoa-value-row">
+                        <div className="pessoa-value">
+                          <span className="pessoa-label">Receitas</span>
+                          <span className="tipo-receita">
+                            {formatCurrency(total.totalReceitas)}
+                          </span>
+                        </div>
+                        <div className="pessoa-value">
+                          <span className="pessoa-label">Despesas</span>
+                          <span className="tipo-despesa">
+                            {formatCurrency(total.totalDespesas)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="pessoa-value-row">
+                        <div className="pessoa-value">
+                          <span className="pessoa-label">Saldo</span>
+                          <strong style={{ 
+                            color: total.saldo >= 0 ? 'var(--success-color)' : 'var(--danger-color)' 
+                          }}>
+                            {formatCurrency(total.saldo)}
+                          </strong>
+                        </div>
+                        <div className="pessoa-value">
+                          <span className="pessoa-label">% do Total</span>
+                          <span>{porcentagem.toFixed(1)}%</span>
+                        </div>
+                      </div>
+                      <div className="pessoa-progress">
+                        <ProgressBar percentage={porcentagem} />
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
-            </tbody>
-          </table>
+            </div>
+          </>
         )}
       </Card>
     </>

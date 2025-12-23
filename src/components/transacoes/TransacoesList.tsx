@@ -57,36 +57,75 @@ export const TransacoesList: React.FC = () => {
       {transacoes.length === 0 ? (
         <p className="empty-message">Nenhuma transação cadastrada.</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>DESCRIÇÃO</th>
-              <th>VALOR</th>
-              <th>CATEGORIA</th>
-              <th>PESSOA</th>
-              <th>TIPO</th>
-            </tr>
-          </thead>
-          <tbody>
+        <>
+          <div className="table-container">
+            <table className="transacoes-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>DESCRIÇÃO</th>
+                  <th>VALOR</th>
+                  <th>CATEGORIA</th>
+                  <th>PESSOA</th>
+                  <th>TIPO</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transacoes.map((transacao) => (
+                  <tr key={transacao.id}>
+                    <td>{transacao.id}</td>
+                    <td>{transacao.descricao}</td>
+                    <td className={getTipoClass(transacao.tipo)}>
+                      {formatCurrency(transacao.valor)}
+                    </td>
+                    <td>{transacao.categoria?.descricao || transacao.categoriaId}</td>
+                    <td>{transacao.pessoa?.nome || transacao.pessoaId}</td>
+                    <td>
+                      <span className={`badge ${getTipoClass(transacao.tipo)}`}>
+                        {transacao.tipo}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="mobile-cards">
             {transacoes.map((transacao) => (
-              <tr key={transacao.id}>
-                <td>{transacao.id}</td>
-                <td>{transacao.descricao}</td>
-                <td className={getTipoClass(transacao.tipo)}>
-                  {formatCurrency(transacao.valor)}
-                </td>
-                <td>{transacao.categoria?.descricao || transacao.categoriaId}</td>
-                <td>{transacao.pessoa?.nome || transacao.pessoaId}</td>
-                <td>
+              <div key={transacao.id} className="transacao-card">
+                <div className="transacao-card-header">
+                  <div className="transacao-id">#{transacao.id}</div>
                   <span className={`badge ${getTipoClass(transacao.tipo)}`}>
                     {transacao.tipo}
                   </span>
-                </td>
-              </tr>
+                </div>
+                <div className="transacao-card-body">
+                  <div className="transacao-descricao">
+                    <strong>{transacao.descricao}</strong>
+                  </div>
+                  <div className="transacao-value-row">
+                    <div className="transacao-value">
+                      <span className="transacao-label">Valor</span>
+                      <span className={getTipoClass(transacao.tipo)}>
+                        <strong>{formatCurrency(transacao.valor)}</strong>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="transacao-info-row">
+                    <div className="transacao-info">
+                      <span className="transacao-label">Categoria</span>
+                      <span>{transacao.categoria?.descricao || transacao.categoriaId}</span>
+                    </div>
+                    <div className="transacao-info">
+                      <span className="transacao-label">Pessoa</span>
+                      <span>{transacao.pessoa?.nome || transacao.pessoaId}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </>
       )}
     </Card>
   );

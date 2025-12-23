@@ -43,3 +43,137 @@
   display: inline-block;
 }
 
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  margin: 0;
+  max-width: 100%;
+}
+
+.totais-table {
+  width: 100%;
+  min-width: 900px;
+  margin: 0;
+  table-layout: auto;
+}
+
+.totais-table th,
+.totais-table td {
+  white-space: nowrap;
+  padding: 12px 16px;
+}
+
+.totais-table th:first-child,
+.totais-table td:first-child {
+  white-space: normal;
+  min-width: 150px;
+}
+
+.mobile-cards {
+  display: none;
+}
+
+.categoria-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+
+.categoria-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.categoria-transacoes {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.categoria-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.categoria-value-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.categoria-value {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.categoria-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.categoria-value strong,
+.categoria-value span:not(.categoria-label) {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.categoria-progress {
+  margin-top: 8px;
+}
+
+@media (max-width: 1024px) {
+  .totais-table {
+    min-width: 800px;
+  }
+  
+  .totais-table th,
+  .totais-table td {
+    padding: 10px 12px;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-container {
+    display: none !important;
+  }
+
+  .mobile-cards {
+    display: block !important;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categoria-value-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .categoria-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .categoria-card {
+    padding: 12px;
+  }
+}
+
