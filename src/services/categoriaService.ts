@@ -1,5 +1,5 @@
 import apiClient from './api';
-import { Categoria, CreateCategoriaDTO } from '../types';
+import { Categoria, CreateCategoriaDTO } from '@/types';
 
 export const categoriaService = {
   async listar(): Promise<Categoria[]> {

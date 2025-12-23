@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { FaTags, FaChartLine } from 'react-icons/fa';
-import { TotaisPorCategoriaResponse } from '../../types';
-import { totaisService } from '../../services/totaisService';
-import { transacaoService } from '../../services/transacaoService';
-import { Card } from '../shared/Card';
-import { DashboardCard } from '../shared/DashboardCard';
-import { ProgressBar } from '../shared/ProgressBar';
-import { LoadingSpinner } from '../shared/LoadingSpinner';
-import { formatCurrency } from '../../utils/formatters';
+import { TotaisPorCategoriaResponse } from '@/types';
+import { totaisService } from '@/services/totaisService';
+import { transacaoService } from '@/services/transacaoService';
+import { Card } from '@/components/shared/Card';
+import { DashboardCard } from '@/components/shared/DashboardCard';
+import { ProgressBar } from '@/components/shared/ProgressBar';
+import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
+import { formatCurrency } from '@/utils/formatters';
 import './TotaisPorCategoriaPage.css';
 
 const categoriaColors = [

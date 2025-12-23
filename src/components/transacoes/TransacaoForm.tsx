@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { FaDollarSign, FaExclamationTriangle } from 'react-icons/fa';
 import { toast } from 'sonner';
-import { CreateTransacaoDTO, TipoTransacao, Pessoa, Categoria } from '../../types';
-import { transacaoService } from '../../services/transacaoService';
-import { pessoaService } from '../../services/pessoaService';
-import { categoriaService } from '../../services/categoriaService';
-import { Card } from '../shared/Card';
-import { Button } from '../shared/Button';
-import { FormField } from '../shared/FormField';
-import { Select } from '../shared/Select';
+import { CreateTransacaoDTO, TipoTransacao, Pessoa, Categoria } from '@/types';
+import { transacaoService } from '@/services/transacaoService';
+import { pessoaService } from '@/services/pessoaService';
+import { categoriaService } from '@/services/categoriaService';
+import { Card } from '@/components/shared/Card';
+import { Button } from '@/components/shared/Button';
+import { FormField } from '@/components/shared/FormField';
+import { Select } from '@/components/shared/Select';
 import './TransacaoForm.css';
 
 interface TransacaoFormProps {

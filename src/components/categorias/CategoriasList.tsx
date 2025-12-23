@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FaListAlt } from 'react-icons/fa';
-import { Categoria } from '../../types';
-import { categoriaService } from '../../services/categoriaService';
-import { Card } from '../shared/Card';
-import { LoadingSpinner } from '../shared/LoadingSpinner';
+import { Categoria } from '@/types';
+import { categoriaService } from '@/services/categoriaService';
+import { Card } from '@/components/shared/Card';
+import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
 import './CategoriasList.css';
 
 export const CategoriasList: React.FC = () => {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FaHistory } from 'react-icons/fa';
-import { Transacao } from '../../types';
-import { transacaoService } from '../../services/transacaoService';
-import { Card } from '../shared/Card';
-import { LoadingSpinner } from '../shared/LoadingSpinner';
-import { formatCurrency } from '../../utils/formatters';
+import { Transacao } from '@/types';
+import { transacaoService } from '@/services/transacaoService';
+import { Card } from '@/components/shared/Card';
+import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
+import { formatCurrency } from '@/utils/formatters';
 import './TransacoesList.css';
 
 export const TransacoesList: React.FC = () => {

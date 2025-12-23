@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'sonner';
-import { Layout } from './components/layout/Layout';
-import { PessoasPage } from './components/pessoas/PessoasPage';
-import { CategoriasPage } from './components/categorias/CategoriasPage';
-import { TransacoesPage } from './components/transacoes/TransacoesPage';
-import { TotaisPorPessoaPage } from './components/totais/TotaisPorPessoaPage';
-import { TotaisPorCategoriaPage } from './components/totais/TotaisPorCategoriaPage';
+import { Layout } from '@/components/layout/Layout';
+import { PessoasPage } from '@/components/pessoas/PessoasPage';
+import { CategoriasPage } from '@/components/categorias/CategoriasPage';
+import { TransacoesPage } from '@/components/transacoes/TransacoesPage';
+import { TotaisPorPessoaPage } from '@/components/totais/TotaisPorPessoaPage';
+import { TotaisPorCategoriaPage } from '@/components/totais/TotaisPorCategoriaPage';
 
 function App() {
   return (

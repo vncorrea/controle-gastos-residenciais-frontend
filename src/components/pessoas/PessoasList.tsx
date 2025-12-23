@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FaUsers, FaTrash } from 'react-icons/fa';
 import { toast } from 'sonner';
-import { Pessoa } from '../../types';
-import { pessoaService } from '../../services/pessoaService';
-import { Card } from '../shared/Card';
-import { Button } from '../shared/Button';
-import { LoadingSpinner } from '../shared/LoadingSpinner';
+import { Pessoa } from '@/types';
+import { pessoaService } from '@/services/pessoaService';
+import { Card } from '@/components/shared/Card';
+import { Button } from '@/components/shared/Button';
+import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
 import './PessoasList.css';
 
 export const PessoasList: React.FC = () => {

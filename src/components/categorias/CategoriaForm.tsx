@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { FaTags } from 'react-icons/fa';
 import { toast } from 'sonner';
-import { CreateCategoriaDTO, FinalidadeCategoria } from '../../types';
-import { categoriaService } from '../../services/categoriaService';
-import { Card } from '../shared/Card';
-import { Button } from '../shared/Button';
-import { FormField } from '../shared/FormField';
-import { Select } from '../shared/Select';
+import { CreateCategoriaDTO, FinalidadeCategoria } from '@/types';
+import { categoriaService } from '@/services/categoriaService';
+import { Card } from '@/components/shared/Card';
+import { Button } from '@/components/shared/Button';
+import { FormField } from '@/components/shared/FormField';
+import { Select } from '@/components/shared/Select';
 import './CategoriaForm.css';
 
 interface CategoriaFormProps {

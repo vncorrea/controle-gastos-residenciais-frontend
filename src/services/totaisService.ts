@@ -1,5 +1,5 @@
 import apiClient from './api';
-import { TotaisPorPessoaResponse, TotaisPorCategoriaResponse } from '../types';
+import { TotaisPorPessoaResponse, TotaisPorCategoriaResponse } from '@/types';
 
 export const totaisService = {
   async totaisPorPessoa(): Promise<TotaisPorPessoaResponse> {

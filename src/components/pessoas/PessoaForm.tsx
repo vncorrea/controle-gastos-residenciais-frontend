@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { FaUserPlus } from 'react-icons/fa';
 import { toast } from 'sonner';
-import { CreatePessoaDTO } from '../../types';
-import { pessoaService } from '../../services/pessoaService';
-import { Card } from '../shared/Card';
-import { Button } from '../shared/Button';
-import { FormField } from '../shared/FormField';
+import { CreatePessoaDTO } from '@/types';
+import { pessoaService } from '@/services/pessoaService';
+import { Card } from '@/components/shared/Card';
+import { Button } from '@/components/shared/Button';
+import { FormField } from '@/components/shared/FormField';
 import './PessoaForm.css';
 
 interface PessoaFormProps {
