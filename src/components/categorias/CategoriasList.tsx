@@ -61,24 +61,43 @@ export const CategoriasList: React.FC = () => {
       {categorias.length === 0 ? (
         <p className="empty-message">Nenhuma categoria cadastrada.</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NOME</th>
-              <th>FINALIDADE</th>
-            </tr>
-          </thead>
-          <tbody>
+        <>
+          <div className="table-container">
+            <table className="categorias-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>NOME</th>
+                  <th>FINALIDADE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {categorias.map((categoria) => (
+                  <tr key={categoria.id}>
+                    <td>{categoria.id}</td>
+                    <td>{categoria.descricao}</td>
+                    <td>{formatFinalidade(categoria.finalidade)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="mobile-cards">
             {categorias.map((categoria) => (
-              <tr key={categoria.id}>
-                <td>{categoria.id}</td>
-                <td>{categoria.descricao}</td>
-                <td>{formatFinalidade(categoria.finalidade)}</td>
-              </tr>
+              <div key={categoria.id} className="categoria-list-card">
+                <div className="categoria-list-card-header">
+                  <div className="categoria-list-id">#{categoria.id}</div>
+                  <span className={`categoria-badge categoria-badge-${categoria.finalidade.toLowerCase()}`}>
+                    {formatFinalidade(categoria.finalidade)}
+                  </span>
+                </div>
+                <div className="categoria-list-card-body">
+                  <strong>{categoria.descricao}</strong>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
+          </div>
+        </>
       )}
     </Card>
   );
