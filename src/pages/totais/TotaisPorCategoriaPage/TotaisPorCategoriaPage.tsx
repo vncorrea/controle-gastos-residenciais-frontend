@@ -234,3 +234,4 @@ export const TotaisPorCategoriaPage: React.FC = () => {
     </>
   );
 };
+
