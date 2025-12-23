@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "build:prod": "NODE_ENV=production tsc && vite build --mode production",
     "build:analyze": "tsc && vite build --mode analyze",
+    "test": "jest",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "preview:prod": "npm run build:prod && vite preview"
@@ -21,6 +22,10 @@
     "sonner": "^2.0.7"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.1",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.0.3",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
@@ -31,7 +36,10 @@
     "eslint": "^8.55.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
     "terser": "^5.44.1",
+    "ts-jest": "^29.4.6",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   }
