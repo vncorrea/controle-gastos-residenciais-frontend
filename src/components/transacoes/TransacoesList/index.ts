@@ -1,0 +1,2 @@
+export { TransacoesList } from './TransacoesList';
+

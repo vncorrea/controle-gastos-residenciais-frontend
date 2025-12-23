@@ -1,0 +1,39 @@
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+.form-field label.required::after {
+  content: '';
+}
+
+.form-field .required-asterisk {
+  color: var(--danger-color);
+}
+
+.form-error {
+  display: block;
+  margin-top: 6px;
+  color: var(--danger-color);
+  font-size: 0.875rem;
+}
+

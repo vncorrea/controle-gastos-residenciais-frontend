@@ -1,0 +1,2 @@
+export { pessoaService } from './pessoaService';
+

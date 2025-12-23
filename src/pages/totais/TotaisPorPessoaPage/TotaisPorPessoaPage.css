@@ -1,0 +1,182 @@
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.error-message {
+  text-align: center;
+  padding: 20px;
+}
+
+.error-message p {
+  color: var(--danger-color);
+  margin-bottom: 16px;
+}
+
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
+}
+
+.pessoas-table {
+  width: 100%;
+  min-width: 800px;
+  margin: 0;
+  table-layout: auto;
+}
+
+.pessoas-table th,
+.pessoas-table td {
+  white-space: nowrap;
+  padding: 12px 16px;
+}
+
+.pessoas-table th:first-child,
+.pessoas-table td:first-child {
+  white-space: normal;
+  min-width: 150px;
+}
+
+.mobile-cards {
+  display: none;
+}
+
+.pessoa-card {
+  background-color: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+
+.pessoa-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pessoa-transacoes {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.pessoa-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pessoa-value-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.pessoa-value {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pessoa-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.pessoa-value strong,
+.pessoa-value span:not(.pessoa-label) {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.pessoa-progress {
+  margin-top: 8px;
+}
+
+.tipo-receita {
+  color: var(--success-color);
+}
+
+.tipo-despesa {
+  color: var(--danger-color);
+}
+
+.saldo-positivo {
+  color: var(--success-color);
+}
+
+.saldo-negativo {
+  color: var(--danger-color);
+}
+
+.saldo-zero {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 1024px) {
+  .pessoas-table {
+    min-width: 700px;
+  }
+  
+  .pessoas-table th,
+  .pessoas-table td {
+    padding: 10px 12px;
+    font-size: 0.875rem;
+  }
+  
+  .dashboard-cards {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-container {
+    display: none !important;
+  }
+
+  .mobile-cards {
+    display: block !important;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pessoa-value-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .pessoa-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .pessoa-card {
+    padding: 12px;
+  }
+}
+

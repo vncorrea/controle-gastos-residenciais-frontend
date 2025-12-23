@@ -1,0 +1,2 @@
+export { CategoriasList } from './CategoriasList';
+

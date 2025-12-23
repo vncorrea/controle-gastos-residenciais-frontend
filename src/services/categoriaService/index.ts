@@ -1,0 +1,2 @@
+export { categoriaService } from './categoriaService';
+
