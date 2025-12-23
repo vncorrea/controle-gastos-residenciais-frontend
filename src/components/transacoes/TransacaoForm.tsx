@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaDollarSign, FaExclamationTriangle } from 'react-icons/fa';
+import { toast } from 'sonner';
 import { CreateTransacaoDTO, TipoTransacao, Pessoa, Categoria } from '../../types';
 import { transacaoService } from '../../services/transacaoService';
 import { pessoaService } from '../../services/pessoaService';
@@ -42,14 +43,22 @@ export const TransacaoForm: React.FC<TransacaoFormProps> = ({ onSuccess }) => {
       setPessoas(pessoasData);
       setCategorias(categoriasData);
     } catch (err) {
-      alert('Erro ao carregar dados. Tente novamente.');
+      toast.error('Erro ao carregar dados. Tente novamente.');
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
+  const MAX_VALOR = 10000000; // 10 milhões
+
   const handleChange = (field: keyof CreateTransacaoDTO, value: string | number) => {
+    // Limita o valor máximo a 10 milhões
+    if (field === 'valor' && typeof value === 'number' && value > MAX_VALOR) {
+      toast.error(`Valor máximo permitido é R$ ${MAX_VALOR.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+      return;
+    }
+    
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
@@ -78,6 +87,8 @@ export const TransacaoForm: React.FC<TransacaoFormProps> = ({ onSuccess }) => {
 
     if (!formData.valor || formData.valor <= 0) {
       newErrors.valor = 'Valor deve ser um número positivo';
+    } else if (formData.valor > MAX_VALOR) {
+      newErrors.valor = `Valor máximo permitido é R$ ${MAX_VALOR.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     }
 
     if (!formData.categoriaId || formData.categoriaId === 0) {
@@ -123,10 +134,10 @@ export const TransacaoForm: React.FC<TransacaoFormProps> = ({ onSuccess }) => {
         pessoaId: 0,
       });
       setErrors({});
-      alert('Transação cadastrada com sucesso!');
+      toast.success('Transação cadastrada com sucesso!');
       onSuccess?.();
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Erro ao cadastrar transação. Tente novamente.');
+      toast.error(err.response?.data?.message || 'Erro ao cadastrar transação. Tente novamente.');
       console.error(err);
     } finally {
       setSubmitting(false);
@@ -162,9 +173,34 @@ export const TransacaoForm: React.FC<TransacaoFormProps> = ({ onSuccess }) => {
             <input
               type="number"
               min="0.01"
+              max="10000000"
               step="0.01"
               value={formData.valor || ''}
-              onChange={(e) => handleChange('valor', parseFloat(e.target.value) || 0)}
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                if (inputValue === '') {
+                  handleChange('valor', 0);
+                  return;
+                }
+                const valor = parseFloat(inputValue);
+                if (isNaN(valor)) {
+                  return;
+                }
+                if (valor <= MAX_VALOR) {
+                  handleChange('valor', valor);
+                } else {
+                  toast.error(`Valor máximo permitido é R$ ${MAX_VALOR.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+                  e.target.value = (formData.valor || 0).toString();
+                }
+              }}
+              onBlur={(e) => {
+                const valor = parseFloat(e.target.value) || 0;
+                if (valor > MAX_VALOR) {
+                  handleChange('valor', MAX_VALOR);
+                  e.target.value = MAX_VALOR.toString();
+                  toast.error(`Valor máximo permitido é R$ ${MAX_VALOR.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
+                }
+              }}
               placeholder="0,00"
             />
           </FormField>

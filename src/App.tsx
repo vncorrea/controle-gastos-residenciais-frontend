@@ -1,5 +1,5 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import { Layout } from './components/layout/Layout';
 import { PessoasPage } from './components/pessoas/PessoasPage';
 import { CategoriasPage } from './components/categorias/CategoriasPage';
@@ -20,6 +20,7 @@ function App() {
           <Route path="/totais/categorias" element={<TotaisPorCategoriaPage />} />
         </Routes>
       </Layout>
+      <Toaster position="top-right" richColors />
     </Router>
   );
 }

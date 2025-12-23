@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaTags } from 'react-icons/fa';
+import { toast } from 'sonner';
 import { CreateCategoriaDTO, FinalidadeCategoria } from '../../types';
 import { categoriaService } from '../../services/categoriaService';
 import { Card } from '../shared/Card';
@@ -50,10 +51,10 @@ export const CategoriaForm: React.FC<CategoriaFormProps> = ({ onSuccess }) => {
       await categoriaService.criar(formData);
       setFormData({ descricao: '', finalidade: 'Ambas' });
       setErrors({});
-      alert('Categoria cadastrada com sucesso!');
+      toast.success('Categoria cadastrada com sucesso!');
       onSuccess?.();
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Erro ao cadastrar categoria. Tente novamente.');
+      toast.error(err.response?.data?.message || 'Erro ao cadastrar categoria. Tente novamente.');
       console.error(err);
     } finally {
       setSubmitting(false);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaUsers, FaTrash } from 'react-icons/fa';
+import { toast } from 'sonner';
 import { Pessoa } from '../../types';
 import { pessoaService } from '../../services/pessoaService';
 import { Card } from '../shared/Card';
@@ -40,8 +41,9 @@ export const PessoasList: React.FC = () => {
       setDeletingId(id);
       await pessoaService.deletar(id);
       await carregarPessoas();
+      toast.success('Pessoa deletada com sucesso!');
     } catch (err) {
-      alert('Erro ao deletar pessoa. Tente novamente.');
+      toast.error('Erro ao deletar pessoa. Tente novamente.');
       console.error(err);
     } finally {
       setDeletingId(null);

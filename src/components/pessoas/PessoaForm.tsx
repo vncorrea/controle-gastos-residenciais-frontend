@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaUserPlus } from 'react-icons/fa';
+import { toast } from 'sonner';
 import { CreatePessoaDTO } from '../../types';
 import { pessoaService } from '../../services/pessoaService';
 import { Card } from '../shared/Card';
@@ -55,10 +56,10 @@ export const PessoaForm: React.FC<PessoaFormProps> = ({ onSuccess }) => {
       await pessoaService.criar(formData);
       setFormData({ nome: '', idade: 0 });
       setErrors({});
-      alert('Pessoa cadastrada com sucesso!');
+      toast.success('Pessoa cadastrada com sucesso!');
       onSuccess?.();
     } catch (err: any) {
-      alert(err.response?.data?.message || 'Erro ao cadastrar pessoa. Tente novamente.');
+      toast.error(err.response?.data?.message || 'Erro ao cadastrar pessoa. Tente novamente.');
       console.error(err);
     } finally {
       setSubmitting(false);
